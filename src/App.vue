@@ -2,7 +2,12 @@
   <h1>Code Ninjas Accounts</h1>
   <Search />
   <AddAccount @hide-main="hideMain" @add-account="addAccount" />
-  <MainAccount :accounts="accounts" v-if="showMainPage" />
+  <MainAccount
+    :accounts="accounts"
+    v-if="showMainPage"
+    @delete-account="deleteAccount"
+    @edit-acc="editAccount"
+  />
 </template>
 
 <script>
@@ -28,10 +33,11 @@ export default {
     async fetchAccounts() {
       const res = await fetch('http://localhost:4000/account/all');
       const data = await res.json();
+      // console.log(data);
       return data;
     },
     async addAccount(accountInformation) {
-      console.log(accountInformation);
+      //console.log(accountInformation);
 
       const res = await fetch('http://localhost:4000/account', {
         method: 'POST',
@@ -44,20 +50,27 @@ export default {
       const data = await res.json();
       console.log('data: ', data);
     },
-
-    //   axios
-    //     .post('http://localhost:4000/account', {
-    //       username: accountInformation.username,
-    //       firstName: accountInformation.firstName,
-    //       lastName: accountInformation.lastName,
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((err) => {
-    //       console.log('something went wrong', err);
-    //     });
-    // },
+    async deleteAccount(id) {
+      if (confirm('Are you sure buddy?')) {
+        const res = await fetch(`http://localhost:4000/account/${id}`, {
+          method: 'DELETE',
+        });
+        console.log(res);
+        location.reload();
+      }
+    },
+    async editAccount(editedInfo) {
+      const res = await fetch('http://localhost:4000/account', {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(editedInfo),
+      });
+      console.log(res.json());
+      const data = await res.json();
+      console.log('data: ', data);
+    },
 
     hideMain(visible) {
       this.showMainPage = !visible;
