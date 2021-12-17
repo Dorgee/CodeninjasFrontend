@@ -51,25 +51,34 @@
     <tbody>
       <tr :key="account._id" v-for="account in accounts">
         <td>
-          {{ account.username }}
+          {{ account.firstName }}
         </td>
         <td>{{ account.firstName }}</td>
         <td>{{ account.lastName }}</td>
-        <td>
-          <p>Username: ScratchKat123</p>
-          <p>Password: mahoganycn</p>
+        <td v-if="account.scratch.length > 0">
+          <div :key="scratch._id" v-for="scratch in account.roblox">
+            <p>username: {{ scratch.username }}</p>
+            <p>Password: {{ scratch.password }}</p>
+          </div>
+        </td>
+        <td v-else>
           <button type="button" class="btn btn-primary" @click="showScratch">
             Add Scratch Account
           </button>
         </td>
 
-        <td>
-          <p>Username: ScratchKat123</p>
-          <p>Password: mahoganycn</p>
+        <td v-if="account.roblox.length > 0">
+          <div :key="roblox._id" v-for="roblox in account.roblox">
+            <p>username: {{ roblox.username }}</p>
+            <p>Password: {{ roblox.password }}</p>
+          </div>
+        </td>
+        <td v-else>
           <button type="button" class="btn btn-primary">
             Add Roblox Account
           </button>
         </td>
+
         <!-- <td>
           <button @click="showForm">
             <i class="fas fa-edit"></i>
@@ -86,8 +95,6 @@
 </template>
 
 <script>
-// import Search from './Search';
-// import AddAccount from './AddAccount';
 import Scratch from './Scratch';
 
 export default {
