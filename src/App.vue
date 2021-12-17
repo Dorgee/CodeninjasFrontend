@@ -33,7 +33,7 @@ export default {
     async fetchAccounts() {
       const res = await fetch('http://localhost:4000/account/all');
       const data = await res.json();
-      console.log(data[2].roblox.length);
+      //  console.log(data[2].scratch[0].username);
       return data;
     },
     async addAccount(accountInformation) {

@@ -35,7 +35,7 @@
       </button>
     </form>
   </div>
-  <div><Scratch v-if="showScratchAccount" /></div>
+
   <table class="table table-hover table-dark">
     <thead>
       <tr>
@@ -51,12 +51,12 @@
     <tbody>
       <tr :key="account._id" v-for="account in accounts">
         <td>
-          {{ account.firstName }}
+          {{ account.username }}
         </td>
         <td>{{ account.firstName }}</td>
         <td>{{ account.lastName }}</td>
         <td v-if="account.scratch.length > 0">
-          <div :key="scratch._id" v-for="scratch in account.roblox">
+          <div :key="scratch._id" v-for="scratch in account.scratch">
             <p>username: {{ scratch.username }}</p>
             <p>Password: {{ scratch.password }}</p>
           </div>
@@ -65,6 +65,7 @@
           <button type="button" class="btn btn-primary" @click="showScratch">
             Add Scratch Account
           </button>
+          <Scratch v-if="showScratchAccount" :id="account._id" />
         </td>
 
         <td v-if="account.roblox.length > 0">
@@ -74,9 +75,10 @@
           </div>
         </td>
         <td v-else>
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" @click="showRoblox">
             Add Roblox Account
           </button>
+          <Roblox v-if="showRobloxAccount" :id="account._id" />
         </td>
 
         <!-- <td>
@@ -96,11 +98,13 @@
 
 <script>
 import Scratch from './Scratch';
+import Roblox from './Roblox';
 
 export default {
   name: 'MainAccount',
   components: {
     Scratch,
+    Roblox,
   },
   props: {
     accounts: Array,
@@ -113,6 +117,7 @@ export default {
       firstName: '',
       lastName: '',
       showScratchAccount: false,
+      showRobloxAccount: false,
     };
   },
   methods: {
@@ -130,6 +135,13 @@ export default {
     },
     showScratch() {
       this.showScratchAccount = !this.showScratchAccount;
+      // window.scrollTo(0, 0);
+    },
+    addScratchAccount(accountInformation) {
+      console.log(accountInformation);
+    },
+    showRoblox() {
+      this.showRobloxAccount = !this.showRobloxAccount;
     },
   },
 };

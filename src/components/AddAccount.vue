@@ -67,6 +67,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
       };
+
       this.$emit('add-account', accountInformation);
     },
   },
