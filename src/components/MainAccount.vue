@@ -1,7 +1,16 @@
 <template>
   <!-- <Search />
   <AddAccount /> -->
-  <div class="edit_user" v-if="isEditing">
+  <div class="search-bar">
+    <input
+      type="tel"
+      name="search"
+      id="search"
+      placeholder="Search for a ninja"
+      v-model="search"
+    />
+  </div>
+  <!-- <div class="edit_user" v-if="isEditing">
     <form>
       <div class="form-group">
         <label for="userName">Username</label>
@@ -34,7 +43,7 @@
         Edit
       </button>
     </form>
-  </div>
+  </div> -->
 
   <table class="table table-hover table-dark">
     <thead>
@@ -49,7 +58,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr :key="account._id" v-for="account in accounts">
+      <tr :key="account._id" v-for="account in filteredAccounts">
         <td>
           {{ account.username }}
         </td>
@@ -118,6 +127,7 @@ export default {
       lastName: '',
       showScratchAccount: false,
       showRobloxAccount: false,
+      search: '',
     };
   },
   methods: {
@@ -142,6 +152,13 @@ export default {
     },
     showRoblox() {
       this.showRobloxAccount = !this.showRobloxAccount;
+    },
+  },
+  computed: {
+    filteredAccounts() {
+      return this.accounts.filter((account) => {
+        return account.firstName.toLowerCase().match(this.search.toLowerCase());
+      });
     },
   },
 };
@@ -170,5 +187,16 @@ export default {
 
 .edit {
   margin-top: 1rem;
+}
+
+search {
+  margin-left: 0.5rem;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 </style>

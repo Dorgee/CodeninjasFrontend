@@ -1,6 +1,6 @@
 <template>
   <h1>Code Ninjas Accounts</h1>
-  <Search />
+
   <AddAccount @hide-main="hideMain" @add-account="addAccount" />
   <MainAccount
     :accounts="accounts"
@@ -12,7 +12,6 @@
 
 <script>
 import MainAccount from './components/MainAccount';
-import Search from './components/Search';
 import AddAccount from './components/AddAccount';
 //import axios from 'axios';
 
@@ -20,7 +19,6 @@ export default {
   name: 'App',
   components: {
     MainAccount,
-    Search,
     AddAccount,
   },
   data() {
